@@ -28,7 +28,38 @@ class RegisterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+       
+        $validated = $request->validate([
+            
+            'name' => 'required|string',
+            
+            'phone' => 'required|numeric',
+            
+            'car' => 'required|string',
+            
+            'other_car' => 'nullable|string',
+            
+            'city' => 'required|string',
+            
+            'region' => 'required|string',
+            
+            'other_region' => 'nullable|string',
+        ]);
+
+        $register = Register::create([
+            'name' => $validated['name'],
+            'phone' => $validated['phone'],
+            'car' => $validated['car'],
+            'other_car' => $validated['other_car'],
+            'city' => $validated['city'],
+            'region' => $validated['region'],
+            'other_region' => $validated['other_region'],
+        ]);
+        return response()->json([
+            'message' => 'تم تسجيل الدخول بنجاح',
+            'register' => $register
+        ]);
     }
 
     /**
